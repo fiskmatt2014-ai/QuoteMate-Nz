@@ -7,7 +7,7 @@ import { useEffect, useState } from 'react';
 export default function Navigation() {
   const pathname = usePathname();
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ business_name: string } | null>(null);
 
   useEffect(() => {
     fetch('/api/auth/me')

@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function CustomersPage() {
   const router = useRouter();
-  const [customers, setCustomers] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<Array<{ id: number; name: string; email?: string; phone?: string }>>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
 

@@ -41,7 +41,7 @@ export async function POST(request: NextRequest) {
 
     // Calculate totals
     const subtotal = items.reduce(
-      (sum: number, item: any) => sum + item.quantity * item.unit_price,
+      (sum: number, item: { quantity: number; unit_price: number }) => sum + item.quantity * item.unit_price,
       0
     );
     const gstAmount = calculateGST(subtotal);

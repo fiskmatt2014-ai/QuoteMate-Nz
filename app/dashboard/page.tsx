@@ -13,8 +13,8 @@ export default function DashboardPage() {
     totalQuotes: 0,
     totalInvoices: 0,
     totalCustomers: 0,
-    recentQuotes: [] as any[],
-    recentInvoices: [] as any[],
+    recentQuotes: [] as Array<{ id: number; quote_number: string; customer_name: string; total: number; status: string }>,
+    recentInvoices: [] as Array<{ id: number; invoice_number: string; customer_name: string; total: number; status: string }>,
   });
 
   useEffect(() => {

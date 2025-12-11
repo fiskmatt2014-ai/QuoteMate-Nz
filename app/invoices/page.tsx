@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function InvoicesPage() {
   const router = useRouter();
-  const [invoices, setInvoices] = useState<any[]>([]);
+  const [invoices, setInvoices] = useState<Array<{ id: number; invoice_number: string; customer_name: string; date: string; total: number; status: string }>>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

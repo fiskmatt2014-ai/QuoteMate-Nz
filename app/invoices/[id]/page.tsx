@@ -7,16 +7,20 @@ import { formatCurrency, formatDate } from '@/lib/utils/format';
 
 export default function InvoiceViewPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const [invoice, setInvoice] = useState<any>(null);
+  const [invoice, setInvoice] = useState<{
+    id: number;
+    invoice_number: string;
+    customer_name: string;
+    date: string;
+    due_date?: string;
+    status: string;
+    subtotal: number;
+    gst_amount: number;
+    total: number;
+    notes?: string;
+    items: Array<{ id: number; description: string; quantity: number; unit_price: number; total: number }>;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
-  const [id, setId] = useState<string>('');
-
-  useEffect(() => {
-    params.then(p => {
-      setId(p.id);
-      fetchInvoice(p.id);
-    });
-  }, []);
 
   const fetchInvoice = async (invoiceId: string) => {
     const res = await fetch(`/api/invoices/${invoiceId}`);
@@ -28,6 +32,12 @@ export default function InvoiceViewPage({ params }: { params: Promise<{ id: stri
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    params.then(p => {
+      fetchInvoice(p.id);
+    });
+  }, [params, router]);
 
   if (loading) {
     return (
@@ -111,7 +121,7 @@ export default function InvoiceViewPage({ params }: { params: Promise<{ id: stri
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {invoice.items.map((item: any) => (
+                {invoice.items.map((item) => (
                   <tr key={item.id}>
                     <td className="py-3 text-gray-900">{item.description}</td>
                     <td className="py-3 text-right text-gray-900">{item.quantity}</td>

@@ -7,16 +7,20 @@ import { formatCurrency, formatDate } from '@/lib/utils/format';
 
 export default function QuoteViewPage({ params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
-  const [quote, setQuote] = useState<any>(null);
+  const [quote, setQuote] = useState<{
+    id: number;
+    quote_number: string;
+    customer_name: string;
+    date: string;
+    valid_until?: string;
+    status: string;
+    subtotal: number;
+    gst_amount: number;
+    total: number;
+    notes?: string;
+    items: Array<{ id: number; description: string; quantity: number; unit_price: number; total: number }>;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
-  const [id, setId] = useState<string>('');
-
-  useEffect(() => {
-    params.then(p => {
-      setId(p.id);
-      fetchQuote(p.id);
-    });
-  }, []);
 
   const fetchQuote = async (quoteId: string) => {
     const res = await fetch(`/api/quotes/${quoteId}`);
@@ -28,6 +32,12 @@ export default function QuoteViewPage({ params }: { params: Promise<{ id: string
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    params.then(p => {
+      fetchQuote(p.id);
+    });
+  }, [params, router]);
 
   if (loading) {
     return (
@@ -111,7 +121,7 @@ export default function QuoteViewPage({ params }: { params: Promise<{ id: string
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {quote.items.map((item: any) => (
+                {quote.items.map((item) => (
                   <tr key={item.id}>
                     <td className="py-3 text-gray-900">{item.description}</td>
                     <td className="py-3 text-right text-gray-900">{item.quantity}</td>

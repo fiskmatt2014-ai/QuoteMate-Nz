@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function QuotesPage() {
   const router = useRouter();
-  const [quotes, setQuotes] = useState<any[]>([]);
+  const [quotes, setQuotes] = useState<Array<{ id: number; quote_number: string; customer_name: string; date: string; total: number; status: string }>>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {

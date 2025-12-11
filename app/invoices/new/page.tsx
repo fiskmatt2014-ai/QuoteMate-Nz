@@ -15,7 +15,7 @@ interface LineItem {
 
 export default function NewInvoicePage() {
   const router = useRouter();
-  const [customers, setCustomers] = useState<any[]>([]);
+  const [customers, setCustomers] = useState<Array<{ id: number; name: string }>>([]);
   const [formData, setFormData] = useState({
     customerId: '',
     date: new Date().toISOString().split('T')[0],
@@ -78,7 +78,7 @@ export default function NewInvoicePage() {
       }
 
       router.push('/invoices');
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.');
       setLoading(false);
     }
